@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>REDSTONE: X-TRACTOR</title>
+        <meta charset="UTF-8">
+        <style type='text/css'>
+            div {
+                border: 2px solid black;
+                border-radius: 5px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            #header {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .left {
+                text-align: center;
+                width: 59%;
+                height: 90%;
+                float: left;
+            }
+            .right {
+                text-align: center;
+                width: 39%;
+                float: right;
+            }
+            #footer {
+                margin-left: auto;
+                margin-right: auto;
+                clear: both;
+                text-align: center;
+            }
+            textarea {
+                display: block;
+                margin: auto;
+                width: 95%;
+                
+            }
+            #input_textarea {
+                
+            }
+            .output_textarea {
+            }
+        </style>
+    </head>
+    <body>
+        <script type='text/javascript'>
+            function goFunction() {
+                var phone_nums_found = "phone numbers\n\n\n\n\ngo here";
+                var IPv4_nums_found = "IPv4\nnums\nhere";
+                var IPv6_nums_found = "IPv6\n\nnumbers\nmore\nrows\n\nrows!!";
+                document.getElementById('email_results_textarea').value = findDomains();
+/*                document.getElementById('email_results_textarea').value = phone_nums_found; */
+                document.getElementById('IPv4_results_textarea').value = IPv4_nums_found;
+                document.getElementById('IPv6_results_textarea').value = IPv6_nums_found;
+                document.getElementById('email_results_textarea').rows = calcRows(phone_nums_found);
+                document.getElementById('IPv4_results_textarea').rows = calcRows(IPv4_nums_found);
+                document.getElementById('IPv6_results_textarea').rows = calcRows(IPv6_nums_found);
+
+            }
+            
+            function calcRows(content){
+                var r = content.match(/\n/g).length + 1;
+                return r;
+            }
+            
+            function copy2clipboard(elementId){
+                document.getElementById(elementId).select();
+                try {
+                    var successful = document.execCommand('copy');
+                } catch (err) {
+                    window.prompt("copy to clipboard: ctrl+c, Enter", document.getElementById(elementId).value);
+                }
+            }
+            
+            function findDomains() {
+                var domains3 = [".com", ".org", ".gov",".net",".int",".edu",".gov",".mil","ticket"];
+                var domains2 = [".cn", ".ru"];
+                var text = document.getElementById('input_textarea').value;
+                var words = text.replace( /\n/g, " " ).split( " " );
+                var out = "";
+                for(var i=0; i<words.length; i++){
+                    if(domains3.indexOf(words[i].substr(words[i].length-5,4)) != -1){
+                        out = out.concat(words[i]);
+                        out = out.concat('\n');
+                    };
+                    if(domains2.indexOf(words[i].substr(words[i].length-4,3)) != -1){
+                        out = out.concat(words[i]);
+                        out = out.concat('\n');
+                    }
+                }
+                return out;
+            }
+        </script>
+        <div id='header'>
+            <h1>X-Tractor</h1>
+        </div>
+        
+        <div class='left'>
+            <form>
+                <br>
+                <input type='button' id='gobutton' onclick="goFunction()" value='click me'><br>
+                Paste Remedy text below:<br>
+                <textarea id='input_textarea' rows='20' placeholder='paste text here' autofocus ></textarea><br>
+            </form>
+        </div>
+        
+        <div class='right'>
+            <form>
+                <br>
+                email address results:
+                <input type='button' id='copyphonenumbersbutton' onclick="copy2clipboard('email_results_textarea')" value='copy'><br>
+                <textarea class='output_textarea' id='email_results_textarea' rows='5' readonly></textarea><br>
+                IPv4 results:
+                <input type='button' id='copyphonenumbersbutton' onclick="copy2clipboard('IPv4_results_textarea')" value='copy'><br>
+                <textarea class='output_textarea' id='IPv4_results_textarea' rows='5' readonly></textarea><br>
+                IPv6 results:
+                <input type='button' id='copyphonenumbersbutton' onclick="copy2clipboard('IPv6_results_textarea')" value='copy'><br>
+                <textarea class='output_textarea' id='IPv6_results_textarea' rows='5' readonly></textarea><br>
+            </form>
+        </div>
+        
+        <div id='footer'>
+            <h3>X-Tractor, Produced by <em>REDSTONE</em></h3>
+        </div>
+    </body>
+</html>
